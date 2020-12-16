@@ -71,8 +71,9 @@ elif pilihan == 2:
                 )
             
             tambahstok = p.Stock_Barang(input("id barang : "), input("nama barang : "), input("harga : "), input("persediaan"), input("jumlah terjual : "))
-            
+            #masukkandata
             conn.execute("insert into Stock_Barang values (?,?,?,?,?)", (tambahstok.get_idBarang(), tambahstok.get_namaBarang(), tambahstok.get_harga(), tambahstok.get_persediaan(), tambahstok.get_jumlahTerjual()))
+            conn.commit()
 
 
         if choose == 3:
