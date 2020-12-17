@@ -95,16 +95,13 @@ class Stock_Barang:
 
 class Transaksi(Login):
     def __init__(self, namaPembeli, listBarang):
-        self.__noTransaksi = 1
+        self.noTransaksi = 1
         self.__namaPembeli = namaPembeli
         self.idBarang = []
         self.__listBarang = listBarang
         self.hargaSatuan = []
         self.totalHarga = 0
         self.__tanggalPembelian = 0
-
-    def get_noTransaksi(self):
-        return self.__noTransaksi
 
     def get_listBarang(self):
         return self.__listBarang
