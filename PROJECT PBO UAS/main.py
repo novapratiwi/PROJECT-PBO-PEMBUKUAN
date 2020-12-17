@@ -37,6 +37,7 @@ elif pilihan == 2:
 
     cursor = conn.cursor().execute("select username,password from Karyawan where username = ? AND password = ?", (username, password))
     ketemu = cursor.fetchone()
+    #print(ketemu) mengecek variabel ketemu
 
     if ketemu:
         conn.execute("insert into Login values (?,?,?)", (login.get_username(), login.get_password(), login.get_status()))
@@ -59,7 +60,7 @@ elif pilihan == 2:
                     "CREATE TABLE IF NOT EXISTS Stock_Barang (idBarang int primary key,namaBarang text,hargaSatuan int, persediaan int, jumlahTerjual int)"
                     )
                 
-                tambahstok = p.Stock_Barang(input("id barang : "), input("nama barang : "), input("harga : "), input("persediaan"), input("jumlah terjual : "))
+                tambahstok = p.Stock_Barang(input("id barang : "), input("nama barang : "), input("harga barang : "), input("persediaan : "), input("jumlah terjual : "))
                 
                 conn.execute("insert into Stock_Barang values (?,?,?,?,?)", (tambahstok.get_idBarang(), tambahstok.get_namaBarang(), tambahstok.get_harga(), tambahstok.get_persediaan(), tambahstok.get_jumlahTerjual()))
 

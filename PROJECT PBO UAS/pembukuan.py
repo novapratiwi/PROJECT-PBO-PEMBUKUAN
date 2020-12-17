@@ -4,7 +4,6 @@ class Login:
         self.__password = password
         self.__status = "online"
     
-    
     def get_username(self):
         return self.__username
 
@@ -51,8 +50,6 @@ class User(Login):
 
     def set_phoneNumber(self,new):
         self.__phoneNumber = new
-
-
 
 class Owner(User):
     def __init__(self, username, email, nama, alamat, nomorTlpn, password):
@@ -103,6 +100,7 @@ class Transaksi(Login):
         self.totalHarga = 0
         self.__tanggalPembelian = 0
 
+
     def get_listBarang(self):
         return self.__listBarang
 
@@ -111,10 +109,11 @@ class Transaksi(Login):
 
     def get_tanggalPembelian(self):
         return self.__tanggalPembelian
-    
+
+#satu = Transaksi("nova","kecap")
 
 
-    
+
 
 # karyawan1 = Karyawan(input("a :"),input("b :"),input("c :"),input("d :"),input("e :"),input("f :"))
 # print(karyawan1.__dict__)
