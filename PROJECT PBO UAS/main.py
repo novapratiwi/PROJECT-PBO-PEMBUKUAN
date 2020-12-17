@@ -117,7 +117,8 @@ elif pilihan == 2:
         print("maaf username/password yang anda masukan salah")
             
 
-   
+else:
+    print("heyho")   
            
     conn.execute("delete from Login where username = ?", (username,))
     conn.commit()
