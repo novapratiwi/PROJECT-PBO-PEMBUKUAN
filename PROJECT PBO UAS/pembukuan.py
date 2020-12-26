@@ -98,6 +98,7 @@ class Transaksi(Login):
         self.__listBarang = listBarang
         self.hargaSatuan = []
         self.totalHarga = 0
+        self.totalTransaksi = 0
         self.__tanggalPembelian = 0
 
 
@@ -109,6 +110,27 @@ class Transaksi(Login):
 
     def get_tanggalPembelian(self):
         return self.__tanggalPembelian
+
+    def total_transaksi(self):
+        
+
+class Pemasukan(Transaksi):
+    def __init__(self, tanggalpemasukan, transaksi, totalpemasukan):
+        self.tglpemasukan = tanggalpemasukan
+        self.transaksi = transaksi
+        self.totalmasuk = totalpemasukan
+
+    def get_noTransaksi(self):
+        return self.noTransaksi
+
+    def get_totalPemasukan(self):
+        return self.totalmasuk
+
+    def cetak_laporanPenjualan(self):
+        pass
+
+    def totalPemasukan():
+        return self.totalmasuk
 
 #satu = Transaksi("nova","kecap")
 
