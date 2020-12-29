@@ -114,7 +114,7 @@ class Transaksi(Login):
     def total_transaksi(self):
         
 
-class Pemasukan(Transaksi):
+class Pemasukan_kelas:
     def __init__(self, tanggalpemasukan, transaksi, totalpemasukan):
         self.tglpemasukan = tanggalpemasukan
         self.transaksi = transaksi
@@ -131,6 +131,9 @@ class Pemasukan(Transaksi):
 
     def totalPemasukan():
         return self.totalmasuk
+
+
+print ("HAI NOVA ASSALAMUALAIKUM SELAMAT HARI SELASA JANGAN LUPA RISET OPERASI")
 
 #satu = Transaksi("nova","kecap")
 
