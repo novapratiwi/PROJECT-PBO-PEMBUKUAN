@@ -92,6 +92,7 @@ class Stock_Barang:
 
 class Transaksi(Login):
     def __init__(self, namaPembeli, listBarang):
+        super().__init__(username, password)
         self.noTransaksi = 1
         self.__namaPembeli = namaPembeli
         self.idBarang = []
@@ -112,10 +113,12 @@ class Transaksi(Login):
         return self.__tanggalPembelian
 
     def total_transaksi(self):
+        return self.totalTransaksi
         
 
-class Pemasukan_kelas:
+class Pemasukan(Transaksi):
     def __init__(self, tanggalpemasukan, transaksi, totalpemasukan):
+        super().__init__(namaPembeli, listBarang)
         self.tglpemasukan = tanggalpemasukan
         self.transaksi = transaksi
         self.totalmasuk = totalpemasukan
@@ -128,6 +131,9 @@ class Pemasukan_kelas:
 
     def cetak_laporanPenjualan(self):
         pass
+    
+    def datepemasukan(self):
+        self.tglpemasukan = self.get_tanggalPembelian
 
     def totalPemasukan():
         return self.totalmasuk

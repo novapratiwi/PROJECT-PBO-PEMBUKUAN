@@ -47,7 +47,7 @@ elif pilihan == 2:
 
 
         if masuk == True:
-            print("1. LOG OUT\n2. StokBrg\n3. Transaksi")
+            print("1. LOG OUT\n2. StokBrg\n3. Transaksi\n4. Pemasukan")
             choose = int(input("Masukan pilihanmu :"))
 
             if choose == 1:
@@ -112,6 +112,16 @@ elif pilihan == 2:
 
                 
                 conn.execute("insert into Transaksi values (?,?,?,?,?,?,?,?)", (transaksi.noTransaksi, login.get_username(), transaksi.get_namaPembeli(), newlistIDbarang, newlistbrg, newlistHargaSatuan, transaksi.totalHarga, tanggal))
+                conn.commit()
+
+            if choose == 4 :
+                print("=====PEMASUKAN=====")
+                conn.execute(
+                "CREATE TABLE IF NOT EXIST Pemasukan (no_transaksi int primary key, tanggal text, jumlah_transaksi text )"
+                )
+                addpemasukan = p.Pemasukan(input("no_transaksi : "), input("tanggal : "), input("jumlah_transaksi : "))
+                
+                conn.execute("insert into Pemasukan values (?,?,?,?,?)", (addpemasukan.get_noTransaksi(), addpemasukan.datepemasukan(), addpemasukan.total_transaksi()))
                 conn.commit()
 
     else:
