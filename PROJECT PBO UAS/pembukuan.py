@@ -60,16 +60,23 @@ class Owner(User):
         return self.__jabatan
 
 class Karyawan(User):
-    def __init__(self, username, email, nama, alamat, nomorTlpn, password):
+    def __init__(self, username, email, nama, alamat, nomorTlpn, password, gaji):
         super().__init__(username, email, nama, alamat, nomorTlpn, password)
         self.__jabatan = "karyawan"
+        self.__gajiKaryawan = gaji
 
     def get_jabatan(self):
         return self.__jabatan
 
+    def get_gajiKaryawan(self):
+        return self.__gajiKaryawan
+
+    def set_gajiKaryawan(self, gaji):
+        self.__gajiKaryawan = gaji
+
 class Stock_Barang:
-    def __init__(self, idbrg, namabrg, harga, persediaan, jumlahTerjual):
-        self.__idBarang = idbrg
+    def __init__(self, namabrg, harga, persediaan, jumlahTerjual):
+        self.__idBarang = 0
         self.__namaBarang = namabrg
         self.__harga = harga
         self.__persediaan = persediaan
@@ -77,6 +84,9 @@ class Stock_Barang:
 
     def get_idBarang(self):
         return self.__idBarang
+
+    def set_idBarang(self, id):
+        self.__idBarang = id
     
     def get_namaBarang(self):
         return self.__namaBarang
@@ -92,7 +102,7 @@ class Stock_Barang:
 
 class Transaksi(Login):
     def __init__(self, namaPembeli, listBarang):
-        self.noTransaksi = 1
+        self.__noTransaksi = 1
         self.__namaPembeli = namaPembeli
         self.idBarang = []
         self.__listBarang = listBarang
@@ -101,6 +111,11 @@ class Transaksi(Login):
         self.totalTransaksi = 0
         self.__tanggalPembelian = 0
 
+    def get_noTransaksi(self):
+        return self.__noTransaksi
+    
+    def set_noTransaksi(self,no):
+        self.__noTransaksi = no
 
     def get_listBarang(self):
         return self.__listBarang
@@ -111,43 +126,60 @@ class Transaksi(Login):
     def get_tanggalPembelian(self):
         return self.__tanggalPembelian
 
-    def total_transaksi(self):
-        
-
-class Pemasukan_kelas:
-    def __init__(self, tanggalpemasukan, transaksi, totalpemasukan):
-        self.tglpemasukan = tanggalpemasukan
-        self.transaksi = transaksi
-        self.totalmasuk = totalpemasukan
-
-    def get_noTransaksi(self):
-        return self.noTransaksi
+class Pemasukan(Transaksi):
+    def __init__(self, tanggal):
+        #super().__init__(namaPembeli, listBarang)
+        self.__tglpemasukan = tanggal
+        self.__totalmasuk = 0
+    
+    def get_datePemasukan(self):
+        return self.__tglpemasukan 
 
     def get_totalPemasukan(self):
-        return self.totalmasuk
+        return self.__totalmasuk
 
-    def cetak_laporanPenjualan(self):
-        pass
+    def set_totalPemasukan(self,tambah):
+        self.__totalmasuk += tambah
 
-    def totalPemasukan():
-        return self.totalmasuk
+class Pengeluaran(Stock_Barang):
+    def __init__(self, namapengeluaran, jumlah, totalhrg):
+        self.__idPengeluaran = 1
+        self.__idBarang = 0
+        self.__biayaSatuan = 0
+        self.__namaPengeluaran = namapengeluaran
+        self.__jumlah = jumlah
+        self.__totalPengeluaran = totalhrg
+        self.__waktuPengeluaran = 0
 
+    def get_idPengeluaran(self):
+        return self.__idPengeluaran
 
-print ("HAI NOVA ASSALAMUALAIKUM SELAMAT HARI SELASA JANGAN LUPA RISET OPERASI")
+    def set_idPengeluaran(self, tambahID):
+        self.__idPengeluaran += tambahID
+    
+    def get_namaPengeluaran(self):
+        return self.__namaPengeluaran
 
-#satu = Transaksi("nova","kecap")
+    def get_idBarang(self):
+        return self.__idBarang
 
+    def set_idBarang(self, id):
+        self.__idBarang = id
 
+    def get_biayaSatuan(self):
+        return self.__biayaSatuan
 
+    def set_biayaSatuan(self, biaya):
+        self.__biayaSatuan = biaya
+    
+    def get_jumlah(self):
+        return self.__jumlah
 
-# karyawan1 = Karyawan(input("a :"),input("b :"),input("c :"),input("d :"),input("e :"),input("f :"))
-# print(karyawan1.__dict__)
+    def get_totalhrgPengeluaran(self):
+        return self.__totalPengeluaran
 
-# kar1 = Login("adinda1", "abcdefg")
-# print(kar1.__dict__)
-# print(kar1.get_status())
+    def get_waktuPengeluaran(self):
+        return self.__waktuPengeluaran
 
-# kar1.log_out()
-
-# print(kar1.__dict__)
-# print(kar1.get_status())
+    def set_waktuPengeluaran(self,waktu):
+        self.__waktuPengeluaran = waktu
