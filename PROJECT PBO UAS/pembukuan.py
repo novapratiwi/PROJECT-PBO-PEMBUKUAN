@@ -60,10 +60,10 @@ class Owner(User):
         return self.__jabatan
 
 class Karyawan(User):
-    def __init__(self, username, email, nama, alamat, nomorTlpn, password, gaji):
+    def __init__(self, username, email, nama, alamat, nomorTlpn, password):
         super().__init__(username, email, nama, alamat, nomorTlpn, password)
         self.__jabatan = "karyawan"
-        self.__gajiKaryawan = gaji
+        self.__gajiKaryawan = 800000
 
     def get_jabatan(self):
         return self.__jabatan
@@ -96,11 +96,17 @@ class Stock_Barang:
     
     def get_persediaan(self):
         return self.__persediaan
+
+    def set_persediaan(self,baru):
+        self.__persediaan += baru
     
     def get_jumlahTerjual(self):
         return self.__jumlahTerjual
 
-class Transaksi(Login):
+    def set_jumlahTerjual(self,new):
+        self.__jumlahTerjual = new
+
+class Transaksi:
     def __init__(self, namaPembeli, listBarang):
         self.__noTransaksi = 1
         self.__namaPembeli = namaPembeli
@@ -110,6 +116,7 @@ class Transaksi(Login):
         self.totalHarga = 0
         self.totalTransaksi = 0
         self.__tanggalPembelian = 0
+        self.__persediaan = 0
 
     def get_noTransaksi(self):
         return self.__noTransaksi
@@ -126,9 +133,20 @@ class Transaksi(Login):
     def get_tanggalPembelian(self):
         return self.__tanggalPembelian
 
-class Pemasukan(Transaksi):
+    def get_persediaan(self):
+        return self.__persediaan
+
+    def set_persediaan(self,baru):
+        self.__persediaan = baru
+    
+    def get_jumlahTerjual(self):
+        return self.__jumlahTerjual
+
+    def set_jumlahTerjual(self,new):
+        self.__jumlahTerjual = new
+
+class Pemasukan:
     def __init__(self, tanggal):
-        #super().__init__(namaPembeli, listBarang)
         self.__tglpemasukan = tanggal
         self.__totalmasuk = 0
     
@@ -141,7 +159,7 @@ class Pemasukan(Transaksi):
     def set_totalPemasukan(self,tambah):
         self.__totalmasuk += tambah
 
-class Pengeluaran(Stock_Barang):
+class Pengeluaran:
     def __init__(self, namapengeluaran, jumlah, totalhrg):
         self.__idPengeluaran = 1
         self.__idBarang = 0
@@ -150,6 +168,7 @@ class Pengeluaran(Stock_Barang):
         self.__jumlah = jumlah
         self.__totalPengeluaran = totalhrg
         self.__waktuPengeluaran = 0
+        self.__persediaan = 0
 
     def get_idPengeluaran(self):
         return self.__idPengeluaran
@@ -159,6 +178,9 @@ class Pengeluaran(Stock_Barang):
     
     def get_namaPengeluaran(self):
         return self.__namaPengeluaran
+
+    def set_namaPengeluaran(self, nama):
+        self.__namaPengeluaran = nama
 
     def get_idBarang(self):
         return self.__idBarang
@@ -175,11 +197,23 @@ class Pengeluaran(Stock_Barang):
     def get_jumlah(self):
         return self.__jumlah
 
+    def set_jumlah(self,jumlah):
+        self.__jumlah = jumlah
+
     def get_totalhrgPengeluaran(self):
         return self.__totalPengeluaran
+
+    def set_totalhrgPengeluaran(self,total):
+        self.__totalPengeluaran = total
 
     def get_waktuPengeluaran(self):
         return self.__waktuPengeluaran
 
     def set_waktuPengeluaran(self,waktu):
         self.__waktuPengeluaran = waktu
+
+    def get_persediaan(self):
+        return self.__persediaan
+
+    def set_persediaan(self,baru):
+        self.__persediaan = baru

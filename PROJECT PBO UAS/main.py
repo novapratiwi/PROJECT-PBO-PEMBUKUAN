@@ -9,36 +9,24 @@ pilihan = int(input("masukan pilihan anda : "))
 
 
 if pilihan == 1:
-    pilih = input("karyawan atau owner? : ")
 
-    if pilih == "karyawan" :
-        conn.execute(
-        "CREATE TABLE IF NOT EXISTS Karyawan (username text primary key, jabatan text, email text, name text, address text, phoneNumber text, password text, gajiKaryawan)"
-        )
+    conn.execute(
+    "CREATE TABLE IF NOT EXISTS Karyawan (username text primary key, jabatan text, email text, name text, address text, phoneNumber text, password text, gajiKaryawan)"
+    )
 
-        inputKaryawan = p.Karyawan(input("Username :"),input("Email :"),input("Nama :"),input("Alamat :"),input("Nomor Telepon :"),input("Password :"), int(input("gaji : ")))
+    inputKaryawan = p.Karyawan(input("Username :"),input("Email :"),input("Nama :"),input("Alamat :"),input("Nomor Telepon :"),input("Password :"))
 
-        res = conn.execute("select * from Karyawan where username = ?", (inputKaryawan.get_username(),))
+    res = conn.execute("select * from Karyawan where username = ?", (inputKaryawan.get_username(),))
 
-        cursor = conn.cursor().execute("select * from Karyawan")
-        for row in cursor:
-            if res.fetchone() is None:
-                conn.execute("insert into Karyawan values (?,?,?,?,?,?,?,?)", (inputKaryawan.get_username(),inputKaryawan.get_jabatan(),inputKaryawan.get_email(), inputKaryawan.get_name(), inputKaryawan.get_address(), inputKaryawan.get_phoneNumber(), inputKaryawan.get_password(), inputKaryawan.get_gajiKaryawan()))
-                conn.commit()
-                print("data karyawan berhasil ditambahkan")
-            else :
-                print("maaf username yang anda masukan sudah terdaftar")
-    
-    elif pilih=="owner":
-        conn.execute(
-        "CREATE TABLE IF NOT EXISTS Owner (username text primary key, jabatan text, email text, name text, address text, phoneNumber text, password text)"
-        )
-
-        inputOwner = p.Owner(input("Username :"),input("Email :"),input("Nama :"),input("Alamat :"),input("Nomor Telepon :"),input("Password :"))
-
-        conn.execute("insert into Owner values (?,?,?,?,?,?,?)", (inputOwner.get_username(),inputOwner.get_jabatan(),inputOwner.get_email(), inputOwner.get_name(), inputOwner.get_address(), inputOwner.get_phoneNumber(), inputOwner.get_password()))
-        conn.commit()
-        print("data Owner berhasil ditambahkan")
+    cursor = conn.cursor().execute("select * from Karyawan")
+    for row in cursor:
+        if res.fetchone() is None:
+            conn.execute("insert into Karyawan values (?,?,?,?,?,?,?,?)", (inputKaryawan.get_username(),inputKaryawan.get_jabatan(),inputKaryawan.get_email(), inputKaryawan.get_name(), inputKaryawan.get_address(), inputKaryawan.get_phoneNumber(), inputKaryawan.get_password(), inputKaryawan.get_gajiKaryawan()))
+            conn.commit()
+            print("data karyawan berhasil ditambahkan")
+            break
+        else :
+            print("maaf username yang anda masukan sudah terdaftar")
 
 elif pilihan == 2:
     pilih = input("owner atau karyawan? : ")
@@ -67,12 +55,18 @@ elif pilihan == 2:
                     cursor = conn.cursor().execute("select * from Stock_Barang")
                     for row in cursor:
                         print(row)
+                    
+                    print("1. StokBrg\n2. Transaksi\n3. Pemasukan\n4. Pengeluaran")
+                    choose = int(input("Masukan pilihanmu :"))
 
                 if choose == 2:
                     # membaca data lewat python
                     cursor = conn.cursor().execute("select * from Transaksi")
                     for row in cursor:
                         print(row)
+
+                    print("1. StokBrg\n2. Transaksi\n3. Pemasukan\n4. Pengeluaran")
+                    choose = int(input("Masukan pilihanmu :"))
 
                 if choose == 3 :
                     pilih = input("input pemasukan atau lihat pemasukan? : ")
@@ -102,11 +96,14 @@ elif pilihan == 2:
                         print("anda berhasil log out")
 
 
-                    if pilih == "seluruh":
+                    if pilih == "lihat":
                         # membaca data lewat python
                         cursor = conn.cursor().execute("select * from Pemasukan")
                         for row in cursor:
                             print(row)
+                    
+                    print("1. StokBrg\n2. Transaksi\n3. Pemasukan\n4. Pengeluaran")
+                    choose = int(input("Masukan pilihanmu :"))
 
                 if choose == 4 :
                     pilih = input("tambah pengeluaran atau lihat pengeluaran? : ")
@@ -125,26 +122,31 @@ elif pilihan == 2:
                         for row in cursor1:
                             for i in row:
                                 pengeluaran.set_idPengeluaran(1)
-                                print(pengeluaran.get_idPengeluaran())
+                                # print(pengeluaran.get_idPengeluaran())
                         
                         # id barang dan biaya satuan
                         cursor = conn.cursor().execute("select * from Stock_Barang")
                         cursor1 = conn.cursor().execute("select * from Karyawan")
                         for row in cursor:
                             if row[1] == pengeluaran.get_namaPengeluaran():
-                                print(row[1])
+                                # print(row[1])
                                 pengeluaran.set_idBarang(row[0])
-                                print(pengeluaran.get_idBarang())
+                                # print(pengeluaran.get_idBarang())
                                 pengeluaran.set_biayaSatuan(row[2])
-                                print(pengeluaran.get_biayaSatuan())
+                                # print(pengeluaran.get_biayaSatuan())
+                                update = pengeluaran.get_jumlah() + row[3]
+                                pengeluaran.set_persediaan(update)
+                                conn.cursor().execute("UPDATE Stock_Barang SET persediaan = ? WHERE idBarang = ?", (pengeluaran.get_persediaan(), row[0]))
+                                conn.commit()
 
                             elif pengeluaran.get_namaPengeluaran() == "gaji karyawan" :
                                 for row in cursor1:
-                                    print(pengeluaran.get_idBarang())
+                                    # print(pengeluaran.get_idBarang())
                                     pengeluaran.set_biayaSatuan(row[7])
-                                    print(pengeluaran.get_biayaSatuan())
+                                    # print(pengeluaran.get_biayaSatuan())
                                     break
                                 break
+
 
                         # waktu pengeluaran
                         pengeluaran.set_waktuPengeluaran(datetime.datetime.now())
@@ -161,6 +163,9 @@ elif pilihan == 2:
                         cursor = conn.cursor().execute("select * from Pengeluaran")
                         for row in cursor:
                             print(row)
+
+                    print("1. StokBrg\n2. Transaksi\n3. Pemasukan\n4. Pengeluaran")
+                    choose = int(input("Masukan pilihanmu :"))
 
         else:
             print("maaf username/password yang anda masukan salah")
@@ -239,13 +244,17 @@ elif pilihan == 2:
 
                     cursor = conn.cursor().execute("select * from Stock_Barang")
                     for row in cursor:
-                        print(row[1])
                         for i in listbrg:
                             if i==row[1]:
-                                print(i)
-                                continue
-                    
-
+                                transaksi.set_persediaan(row[3]-1)
+                                transaksi.set_jumlahTerjual(row[4]+1)
+                                conn.cursor().execute("UPDATE Stock_Barang SET persediaan = ?, jumlahTerjual = ? WHERE idBarang = ?", (transaksi.get_persediaan(), transaksi.get_jumlahTerjual(), row[0]))
+                                conn.commit()
+                                break
+                            else :
+                                for i in listbrg:
+                                    if i==row[1]:
+                                        continue
 
                     #hitung baris di db transaksi
                     cursor1 = conn.cursor().execute("select idTransaksi from Transaksi")
@@ -273,8 +282,8 @@ elif pilihan == 2:
 
 
                     
-                    # conn.execute("insert into Transaksi values (?,?,?,?,?,?,?,?)", (transaksi.get_noTransaksi(), login.get_username(), transaksi.get_namaPembeli(), newlistIDbarang, newlistbrg, newlistHargaSatuan, transaksi.totalHarga, tanggal))
-                    # conn.commit()
+                    conn.execute("insert into Transaksi values (?,?,?,?,?,?,?,?)", (transaksi.get_noTransaksi(), login.get_username(), transaksi.get_namaPembeli(), newlistIDbarang, newlistbrg, newlistHargaSatuan, transaksi.totalHarga, tanggal))
+                    conn.commit()
 
                     conn.execute("delete from Login where username = ?", (username,))
                     conn.commit()
