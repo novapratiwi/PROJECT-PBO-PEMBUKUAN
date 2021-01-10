@@ -37,7 +37,7 @@ elif pilihan == 2:
 
     cursor = conn.cursor().execute("select username,password from Karyawan where username = ? AND password = ?", (username, password))
     ketemu = cursor.fetchone()
-    #print(ketemu) #mengecek variabel ketemu
+    print(ketemu) #mengecek variabel ketemu
 
     if ketemu:
         conn.execute("insert into Login values (?,?,?)", (login.get_username(), login.get_password(), login.get_status()))
